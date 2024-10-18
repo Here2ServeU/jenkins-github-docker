@@ -34,13 +34,13 @@
 ### Step 3: Push the Code to GitHub
 **Initialize Git in your project directory**
 * git init
+* git branch -M main
 * git remote add origin https://github.com/Here2ServeU/jenkins-github-docker.git
 
 **Add the files and push to GitHub**
 * git add .
 * git commit -m "Add Dockerfile and website"
-* git branch -b master
-* git push -u origin master
+* git push -u origin main
 
 ### Step 4: Create a Webhook with Jenkins
 **Install “GitHub” Plugin in Jenkins**
