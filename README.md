@@ -34,13 +34,13 @@
 ### Step 3: Push the Code to GitHub
 **Initialize Git in your project directory**
 * git init
-* git branch -M main
+* git branch -M master
 * git remote add origin https://github.com/Here2ServeU/jenkins-github-docker.git
 
 **Add the files and push to GitHub**
 * git add .
 * git commit -m "Add Dockerfile and website"
-* git push -u origin main
+* git push -u origin master
 
 ### Step 4: Create a Webhook with Jenkins
 **Install “GitHub” Plugin in Jenkins**
@@ -51,6 +51,14 @@
 * Go to New Item, select Freestyle project, and configure it.
 * Under the Source Code Management section, select Git and enter your repository URL.
 * Under Build Triggers, select GitHub hook trigger for GITScm polling.
+* Under "Execute shell" section in your Jenkins job configuration, add: 
+   * echo "Stopping and removing all running Docker containers..."
+   * docker stop $(docker ps -q) || true
+   * docker rm $(docker ps -a -q) || true
+   * echo "Building the Docker image..."
+   * docker build -t t2s-website .
+   * echo "Running the Docker container..."
+   * docker run -d -p 80:80 --name t2s-website t2s-website
 
 **Configure Webhook in GitHub**
 * Go to your GitHub repository -> Settings -> Webhooks -> Add webhook.
